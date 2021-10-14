@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <title>Films offered for viewing</title>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="display-1">Films offered for viewing</h1>
+    <table class="table table-secondary table-striped table-bordered border-primary">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Title</th>
+          <th scope="col">Overviev</th>
+          <th scope="col">Average</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <script>
+    window.onload = function () {
+      MODULE_0 = {}; //
+      MODULE_0.tBody = document.querySelector('tbody');
+      MODULE_0.tR; //
+      MODULE_0.tD; //       
+
+      MODULE_0.object;
+      MODULE_0.xhrApi = new XMLHttpRequest();
+      MODULE_0.xhrApi.open('GET', 'https://api.themoviedb.org/3/movie/now_playing?api_key=e530dbf87d3f35fe1c14ace5c962084a')
+      MODULE_0.xhrApi.send();
+
+      MODULE_0.xhrApi.onreadystatechange = function (e) {
+        if (MODULE_0.xhrApi.readyState == 4 && MODULE_0.xhrApi.status == 200) {
+          MODULE_0.object = JSON.parse(MODULE_0.xhrApi.response);
+
+          //
+          function createCell(properties) {
+            MODULE_0.tD = document.createElement('td');
+            MODULE_0.tD.innerHTML = properties;
+            MODULE_0.tR.appendChild(MODULE_0.tD);
+          }
+
+          for (value of MODULE_0.object.results) {   //                     
+            MODULE_0.tR = document.createElement('tr');
+            MODULE_0.tBody.appendChild(MODULE_0.tR);
+            createCell(value.id);
+            createCell(value.title);
+            createCell(value.overview);
+            createCell(value.vote_average);
+          }
+        }
+      }
+    }
+
+  </script>
+</body>
+
+</html>
